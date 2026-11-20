@@ -172,3 +172,9 @@ Implement and verify Milestone 3 incrementally, beginning with the server-only G
 - User has neither hosted Supabase nor Netlify account yet. docs/DEPLOYMENT.md records zero-spend setup, separate hosted auth-email requirements, support/sender configuration and Netlify upload/runtime compatibility gates. No production deployment, paid account, domain or advertising purchase occurred. Temporary Resend tunnel/webhook remain disabled.
 - Milestone 5 remains open: resolve WebKit console errors, verify Firefox in an allowed environment, finish performance/hosting compatibility work and complete hosted deployment/security/email acceptance after account setup.
 - Final regression after narrowing auth redirects: all 28 Chromium integration scenarios passed against the rebuilt production server. TypeScript/build, ESLint and 96 unit tests passed; browser bundle scan found zero configured server-secret matches. Local app remains running at http://localhost:3000. WebKit remains 27/28; no claim of full launch acceptance.
+
+## GitHub source upload (2026-11-20)
+
+- At the user's request, initialized Git on main, checked upload candidates for configured credentials and credential patterns, and committed 237 source/documentation/configuration files. No matches were found. .env.local, .local-demo credentials, dependencies, generated builds and test output remain ignored; Supabase branch metadata is also ignored. Existing lockfile and CI workflow preserved.
+- User completed GitHub CLI browser authentication as MajdNasserAhmad. Created private repository https://github.com/MajdNasserAhmad/BrushQuote and pushed main with origin tracking. Initial source commit: 70fa30f. README now states the verified working-MVP status and remaining launch gates.
+- This is a source backup/upload, not a hosted application or Milestone 5 completion. GitHub Actions results are separate from previously passing local checks.

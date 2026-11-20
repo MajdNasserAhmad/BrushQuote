@@ -16,7 +16,7 @@ Before choosing Netlify, resolve its function payload and execution limits again
 
 ## Hosted services and launch sequence
 
-1. Create free service accounts without purchasing upgrades. Choose a compatible host after the above checks. The repository currently has no Git repository or configured remote; establish version control and verify ignored secrets before preparing a hosted source deployment.
+1. Create free hosting/database service accounts without purchasing upgrades. Choose a compatible host after the above checks. Source is versioned on main in the private GitHub repository https://github.com/MajdNasserAhmad/BrushQuote. Local credentials and generated/test data are ignored; configure deployment secrets separately in the selected host.
 2. Create a separate hosted Supabase project. Apply the ordered migrations, verify RLS/composite tenant relationships and private Storage policies remotely, and configure production application/callback URLs. Never migrate local test users, inbox contents or demo credentials into production.
 3. Configure hosted authentication mail independently of the application's quote-email integration. Verify actual signup and recovery delivery to intended beta users and the provider's current recipient restrictions. A working local inbox does not prove hosted delivery.
 4. Configure server secrets in hosting settings; expose only the public Supabase URL/key and public application URL to the browser. Configure a public SUPPORT_EMAIL for the contact page. Never commit .env.local, service-role keys, Groq/Resend keys or webhook secrets.

@@ -1,0 +1,47 @@
+{
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@tailwindcss/postcss": "^4.3.5",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.6",
+    "supabase": "^3.1.0",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
+    "test:integration": "playwright test --config=playwright.integration.config.ts",
+    "test:foundation": "playwright test --config=playwright.foundation.config.ts",
+    "test:ai:live": "node --env-file=.env.local node_modules/vitest/vitest.mjs run --config vitest.ai.config.mts"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^7.0.6",
+    "@radix-ui/react-slot": "^1.5.0",
+    "@react-pdf/renderer": "^4.9.0",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.119.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "groq-sdk": "^1.6.0",
+    "lucide-react": "^1.73.0",
+    "next": "^16.4.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-hook-form": "^7.92.0",
+    "resend": "^6.38.1",
+    "server-only": "^0.0.1",
+    "sharp": "0.35.5",
+    "tailwind-merge": "^3.7.0",
+    "zod": "^4.6.7"
+  }
+}

@@ -1,0 +1,32 @@
+'use client';
+import Link from 'next/link';
+import { useState, useTransition } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ArrowRight, Plus, Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { onboardingSchema, currencies, pricingUnits, type OnboardingValues } from './schema';
+import { onboard } from './actions';
+
+export function OnboardingForm({ email }: { email: string }) {
+  const [error, setError] = useState('');
+  const [logo, setLogo] = useState<File>();
+  const [pending, startTransition] = useTransition();
+  const { register, control, handleSubmit, formState: { errors } } = useForm<OnboardingValues>({
+    resolver: zodResolver(onboardingSchema),
+    defaultValues: { name: '', slug: '', email, phone: '', address: '', currency: 'GBP', tax_registered: false, tax_number: '', tax_rate: '0', description: '', service_areas: '', services: [{ name: '', unit: 'square_metre', unit_price: '' }] },
+  });
+  const { fields, append, remove } = useFieldArray({ control, name: 'services' });
+  const field = (name: 'name' | 'slug' | 'email' | 'phone' | 'address' | 'service_areas' | 'tax_number' | 'tax_rate', label: string, placeholder = '') => <div><label className="label" htmlFor={name}>{label}</label><Input id={name} placeholder={placeholder} type={name === 'email' ? 'email' : 'text'} aria-invalid={!!errors[name]} aria-describedby={errors[name] ? `${name}-error` : undefined} {...register(name)} />{errors[name] && <p id={`${name}-error`} className="mt-2 text-sm text-red-700">{errors[name]?.message}</p>}</div>;
+  return <form noValidate className="space-y-7" onSubmit={handleSubmit(values => startTransition(async () => {
+    setError(''); const form = new FormData(); form.set('details', JSON.stringify(values)); if (logo) form.set('logo', logo);
+    const result = await onboard(form); if (result.error) setError(result.error);
+  }))}>
+    <section className="rounded-2xl border border-border bg-white p-6 sm:p-8"><h2 className="text-lg font-semibold">01 · Your company</h2><p className="mt-2 mb-6 text-sm text-muted-foreground">The details that make your business yours.</p><div className="grid gap-5 sm:grid-cols-2">{field('name', 'Company name', 'Your painting company')}{field('slug', 'Public address name', 'your-company')}{field('email', 'Business email')}{field('phone', 'Business phone')}<div className="sm:col-span-2">{field('address', 'Business address')}</div>{field('service_areas', 'Service areas', 'Bristol, Bath, surrounding villages')}<div><label htmlFor="logo" className="label">Company logo (optional)</label><Input id="logo" name="logo" type="file" accept="image/png,image/jpeg,image/webp" onChange={event => setLogo(event.target.files?.[0])} /><p className="mt-2 text-xs text-muted-foreground">PNG, JPEG or WebP. Up to 2 MB.</p></div><div className="sm:col-span-2"><label className="label" htmlFor="description">About your business</label><textarea id="description" className="field" rows={3} {...register('description')} aria-invalid={!!errors.description} />{errors.description && <p className="mt-2 text-sm text-red-700">{errors.description.message}</p>}</div></div></section>
+    <section className="rounded-2xl border border-border bg-white p-6 sm:p-8"><h2 className="text-lg font-semibold">02 · Currency & tax</h2><p className="mt-2 mb-6 text-sm text-muted-foreground">Choose the defaults for your business.</p><div className="grid gap-5 sm:grid-cols-2"><div><label className="label" htmlFor="currency">Currency</label><select className="field" id="currency" {...register('currency')}>{currencies.map(c => <option key={c}>{c}</option>)}</select></div>{field('tax_rate', 'VAT / tax rate (%)')}{field('tax_number', 'Tax registration number (optional)')}<label className="flex items-center gap-3 text-sm"><input type="checkbox" className="size-4 accent-primary" {...register('tax_registered')} /> My business is tax registered</label></div></section>
+    <section className="rounded-2xl border border-border bg-white p-6 sm:p-8"><h2 className="text-lg font-semibold">03 · Services & pricing</h2><p className="mt-2 mb-6 text-sm text-muted-foreground">Add your actual prices. You can start with one service.</p><div className="space-y-5">{fields.map((entry, index) => <fieldset key={entry.id} className="rounded-lg border border-border p-4"><legend className="px-2 text-xs text-muted-foreground">Service {index + 1}</legend><div className="grid gap-4 sm:grid-cols-[1.4fr_1fr_1fr_auto]"><div><label className="label" htmlFor={`service-${index}`}>Service name</label><Input id={`service-${index}`} {...register(`services.${index}.name`)} aria-invalid={!!errors.services?.[index]?.name} /></div><div><label className="label" htmlFor={`unit-${index}`}>Price per</label><select className="field" id={`unit-${index}`} {...register(`services.${index}.unit`)}>{pricingUnits.map(unit => <option key={unit} value={unit}>{unit.replaceAll('_', ' ')}</option>)}</select></div><div><label className="label" htmlFor={`price-${index}`}>Unit price</label><Input id={`price-${index}`} inputMode="decimal" {...register(`services.${index}.unit_price`)} aria-invalid={!!errors.services?.[index]?.unit_price} /></div><Button className="self-end" type="button" variant="ghost" disabled={fields.length === 1} onClick={() => remove(index)} aria-label={`Remove service ${index + 1}`}><Trash2 /></Button></div>{errors.services?.[index] && <p className="mt-2 text-sm text-red-700">{errors.services[index]?.name?.message ?? errors.services[index]?.unit_price?.message ?? 'Check this service.'}</p>}</fieldset>)}</div>{errors.services?.root?.message && <p className="mt-3 text-sm text-red-700">{errors.services.root.message}</p>}<Button className="mt-5" type="button" variant="outline" disabled={fields.length >= 50} onClick={() => append({ name: '', unit: 'hour', unit_price: '' })}><Plus /> Add service</Button></section>
+    {error && <div role="alert" className="rounded-lg bg-red-50 p-4 text-sm text-red-800">{error} <Link className="underline" href="/dashboard">Open workspace</Link></div>}
+    <div className="flex flex-wrap items-center justify-between gap-4"><p className="max-w-sm text-xs leading-relaxed text-muted-foreground">Your company and pricing are saved together in your private business workspace.</p><Button size="lg" type="submit" disabled={pending}>{pending ? 'Creating workspace…' : 'Create workspace'}<ArrowRight /></Button></div>
+  </form>;
+}

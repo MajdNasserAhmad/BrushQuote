@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+:root { --background: #fafbf9; --foreground: #142c39; --primary: #13755d; --primary-foreground: #ffffff; --muted: #eef2ed; --muted-foreground: #5e706f; --border: #dbe3df; --radius: .75rem; }
+@theme inline {
+  --color-background: var(--background); --color-foreground: var(--foreground);
+  --color-primary: var(--primary); --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted); --color-muted-foreground: var(--muted-foreground); --color-border: var(--border);
+  --font-sans: Arial, Helvetica, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--background); color: var(--foreground); font-family: Arial, Helvetica, sans-serif; }
+button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+button:not(:disabled), select { cursor: pointer; }
+a { text-underline-offset: 4px; }
+::selection { background: #c1e4d5; }
+.field { display: block; width: 100%; min-height: 46px; border: 1px solid var(--border); border-radius: 8px; padding: 11px 13px; background: white; color: var(--foreground); font: inherit; font-size: 14px; }
+.field:focus { outline: 2px solid var(--primary); outline-offset: 2px; }
+.field[aria-invalid="true"] { border-color: #b42318; }
+.field:disabled { background: var(--muted); }
+.panel { border: 1px solid var(--border); border-radius: 16px; background: white; padding: 24px; }
+.data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+.data-table th { padding: 15px 20px; background: var(--muted); font-size: 12px; font-weight: 600; color: var(--muted-foreground); }
+.data-table td { padding: 20px; border-top: 1px solid var(--border); }
+.data-table tbody tr:hover { background: #f8faf7; }
+.label { display: block; margin-bottom: 7px; font-size: 13px; font-weight: 600; }
+.paper-grid { background-image: linear-gradient(#142c3908 1px, transparent 1px), linear-gradient(90deg, #142c3908 1px, transparent 1px); background-size: 30px 30px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }

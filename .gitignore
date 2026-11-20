@@ -1,0 +1,22 @@
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+# Application secrets and generated output
+.env*
+!.env.example
+.next/
+out/
+coverage/
+*.tsbuildinfo
+.npm-cache/
+supabase/.temp/
+supabase/.branches/
+.playwright-mcp/
+.supabase-cli/
+.local-demo/

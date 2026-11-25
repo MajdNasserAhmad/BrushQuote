@@ -36,7 +36,7 @@ npm.cmd run build
 npm.cmd run test:e2e -- --project=chromium
 ```
 
-Latest local checks: TypeScript, ESLint, production build, 96 unit tests and 28 Chromium integration scenarios passed. WebKit passed 27/28 scenarios; a CRM navigation-error check remains open. Windows Application Control blocks the local Firefox automation executable. See [Testing](docs/TESTING.md) and BUILD_PROGRESS.md for details. Integration tests use a production build and local Supabase with fictional fixtures and scoped cleanup. The original e2e suite expects a separate unconfigured build.
+Latest checks: TypeScript, ESLint, production build, 96 unit tests and four deployment-configuration tests passed. Chromium integration coverage passed, including a five-photo upload. Linux Firefox and WebKit each passed 27 workflows; the secret-dependent API check runs separately on Windows. The earlier navigation errors are resolved. A Windows WebKit large-upload timeout and its subsequent passing focused rerun are documented separately. See [Testing](docs/TESTING.md) and BUILD_PROGRESS.md for exact runs and limitations. Integration tests use a production build and local Supabase with fictional fixtures and scoped cleanup. The original e2e suite expects a separate unconfigured build.
 
 ## Documents
 
@@ -49,5 +49,7 @@ Latest local checks: TypeScript, ESLint, production build, 96 unit tests and 28 
 - [Progress](BUILD_PROGRESS.md)
 - [Isolated sample workspace](docs/DEMO.md)
 - [Deployment requirements and open gates](docs/DEPLOYMENT.md)
+
+An optional `render.yaml` prepares a full Node-server preview on Render Free without adding paid resources. Run `npm.cmd run check:deployment` to check production environment configuration; this prints setting names and problems, never secret values. Hosted database, SMTP, sender authorization and live deployment checks are still required. `npm.cmd run test:deployment` tests the configuration guard with fictional values.
 
 The original Playwright example, browser projects and npm lockfile were preserved. CI includes typecheck, lint, Vitest, build and application browser tests. Groq is server-only; all seven AI workflows have passed live verification. Resend draft review, confirmed submission and signed delivery tracking are implemented and verified with the provider's test recipient. See [email setup](docs/EMAIL_DELIVERY.md) and [subscription architecture](docs/SUBSCRIPTIONS.md). Temporary test tunnels are not production deployments. Never commit credentials.

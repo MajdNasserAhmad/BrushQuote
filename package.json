@@ -19,6 +19,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test:unit": "vitest run",
+    "check:deployment": "node --env-file-if-exists=.env.local scripts/check-deployment.mjs",
+    "test:deployment": "node --test scripts/check-deployment.test.mjs",
     "test:e2e": "playwright test",
     "test:integration": "playwright test --config=playwright.integration.config.ts",
     "test:foundation": "playwright test --config=playwright.foundation.config.ts",

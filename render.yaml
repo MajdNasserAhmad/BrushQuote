@@ -1,0 +1,36 @@
+# Optional free preview host. Creating this service still requires a Render account.
+# Supabase provides persistent database/Storage; do not add paid disks or databases.
+services:
+  - type: web
+    name: brushquote
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev && npm run check:deployment && npm run build
+    startCommand: npm run start -- --hostname 0.0.0.0
+    healthCheckPath: /api/health
+    autoDeployTrigger: off
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+      - key: NEXT_PUBLIC_APP_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: PUBLIC_REQUEST_SIGNING_SECRET
+        generateValue: true
+      - key: GROQ_API_KEY
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: RESEND_FROM_EMAIL
+        sync: false
+      - key: RESEND_WEBHOOK_SECRET
+        sync: false
+      - key: SUPPORT_EMAIL
+        sync: false

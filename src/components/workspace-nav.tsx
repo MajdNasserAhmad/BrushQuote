@@ -8,6 +8,6 @@ export function WorkspaceNav() {
   const pathname = usePathname();
   return <nav aria-label="Workspace navigation" className="mt-7 flex flex-wrap gap-2 lg:flex-col">{links.map(({ href, label, icon: Icon }) => {
     const active = pathname === href || (href !== '/dashboard' && pathname.startsWith(`${href}/`));
-    return <Link key={href} href={href} aria-current={active ? 'page' : undefined} className={cn('flex items-center gap-3 rounded-lg p-3 text-sm font-semibold', active ? 'bg-muted text-primary' : 'text-muted-foreground hover:bg-muted')}><Icon size={18} /><span>{label}</span></Link>;
+    return <Link prefetch={false} key={href} href={href} aria-current={active ? 'page' : undefined} className={cn('flex items-center gap-3 rounded-lg p-3 text-sm font-semibold', active ? 'bg-muted text-primary' : 'text-muted-foreground hover:bg-muted')}><Icon size={18} /><span>{label}</span></Link>;
   })}</nav>;
 }

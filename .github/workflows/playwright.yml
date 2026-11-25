@@ -23,6 +23,8 @@ jobs:
       run: npm run lint
     - name: Unit tests
       run: npm run test:unit
+    - name: Deployment configuration tests
+      run: npm run test:deployment
     - name: Production build
       run: npm run build
     - name: Run Playwright tests

@@ -2,6 +2,12 @@
 
 ## Verified baseline
 
+2026-11-25 launch-preparation checkpoint: production build, TypeScript, ESLint, 96 unit tests and four deployment-configuration tests passed. Chromium's 27 unaffected integration scenarios passed together; its expanded five-photo workflow passed after replacing an immediate image-width assertion with a decode-aware poll. All 27 workflow scenarios passed in each of Firefox and WebKit on Linux. The HMAC-dependent raw API scenario was excluded from the credential-restricted Linux bundle and passed separately on Windows. The earlier WebKit navigation-error assertions now pass with speculative route prefetch disabled. Windows WebKit had a large-upload timeout after submission during the full run; Linux results do not erase that observation.
+
+The focused final Windows WebKit public-request rerun passed both scenarios in 10 seconds, including five large photos. No error assertion was suppressed or timeout increased. The previous full-run timeout remains part of the record.
+
+Linux verification used the official `mcr.microsoft.com/playwright:v1.65.1-noble` image with a source-only test bundle, local Supabase's public anon key and a localhost-to-host app bridge. Never mount the complete repository or copy `.env.local` into a container: it contains unrelated external-service credentials. The Linux test bundle intentionally omits the HMAC-dependent endpoint test and contains no external provider credentials. Integration fixtures use the local Studio admin interface for isolated fictional accounts, so run this only against the dedicated local stack. Current GitHub CI also runs deployment-guard tests alongside the preserved three-browser public suite.
+
 Milestones 1–4 are accepted locally; see BUILD_PROGRESS.md for dated evidence. Live Groq text, reasoning, vision and all seven workflows passed. Real Resend test-recipient acceptance and an externally delivered signed delivery event passed. The temporary webhook and tunnel were disabled afterward. No customer email was sent by these checks.
 
 Milestone 5 is in progress. The marketing/demo checkpoint passed TypeScript, ESLint, production build, 96 unit tests and 28 Chromium integration scenarios. Subsequent local registration-origin changes require regression verification before acceptance; consult the latest BUILD_PROGRESS.md checkpoint.
